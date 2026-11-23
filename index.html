@@ -1,64 +1,65 @@
-
-<!DOCTYPE html>
+<!doctype html>
 <html lang="vi">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>SmartStudy 9</title>
-  <style>
-    body {
-      margin: 0;
-      font-family: Arial, sans-serif;
-      background: #f0f5ff;
-      color: #183153;
-    }
-    .container {
-      max-width: 650px;
-      margin: 70px auto;
-      padding: 24px;
-      text-align: center;
-    }
-    .card {
-      background: white;
-      border-radius: 18px;
-      padding: 35px 22px;
-      box-shadow: 0 8px 25px #00000012;
-    }
-    h1 { color: #2457c5; }
-    p { line-height: 1.7; }
-    .button {
-      display: inline-block;
-      padding: 14px 25px;
-      margin-top: 15px;
-      border-radius: 10px;
-      background: #2457c5;
-      color: white;
-      font-weight: bold;
-    }
-    .note {
-      margin-top: 20px;
-      font-size: 13px;
-      color: #65758b;
-    }
-  </style>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#153b79">
+<title>SmartStudy 9 — Học thông minh, tiến bộ mỗi ngày</title>
+<style>
+:root{font-family:system-ui,-apple-system,"Segoe UI",Arial,sans-serif;color:#20304b;background:#f4f7fc;font-synthesis:none}
+*{box-sizing:border-box}body{margin:0}button{font:inherit;cursor:pointer}button:focus-visible,[tabindex]:focus-visible{outline:3px solid #f3ad3e;outline-offset:3px}
+header{background:#fff;border-bottom:1px solid #e5ebf4;position:sticky;top:0;z-index:3}.top{max-width:1100px;margin:auto;padding:15px 20px;display:flex;align-items:center;justify-content:space-between;gap:12px}.brand{font-size:22px;font-weight:850;color:#184d9e}.brand span{color:#18a890}.tag{font-size:12px;color:#60718a;background:#eef3fa;padding:7px 10px;border-radius:20px}
+main{max-width:1100px;margin:0 auto;padding:26px 20px 60px}.hero{background:linear-gradient(120deg,#174d9c,#246ac0 70%,#18a6a2);border-radius:24px;padding:30px;color:white;display:grid;grid-template-columns:1fr auto;align-items:center;gap:20px;box-shadow:0 14px 35px #164d9b20}.hero h1{font-size:clamp(26px,4vw,38px);margin:0 0 10px}.hero p{line-height:1.65;max-width:640px;margin:0}.hero-icon{font-size:72px;line-height:1}
+nav{display:flex;gap:9px;flex-wrap:wrap;margin:22px 0}nav button{border:1px solid #dbe4f2;background:white;color:#31476b;padding:11px 16px;border-radius:12px;font-weight:700}nav button[aria-selected=true]{background:#194f9d;color:white;border-color:#194f9d}
+section[hidden]{display:none!important}.grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}.card{background:#fff;border:1px solid #e5ebf4;border-radius:18px;padding:21px;box-shadow:0 5px 18px #203b6410}.card h2,.card h3{margin:0 0 10px}.card p{line-height:1.6;color:#60718a}.stat{font-size:29px;font-weight:850;color:#1d56a5}.muted{color:#62718a}.section-title{font-size:22px;margin:25px 0 15px}.wide{grid-column:span 2}.pill{display:inline-block;font-size:12px;font-weight:750;color:#167f72;background:#e7f8f4;padding:6px 10px;border-radius:30px}.action{background:#1c5ab1;border:0;border-radius:11px;padding:11px 16px;color:white;font-weight:750}.action:disabled{background:#b9c5d5;cursor:not-allowed}.secondary{background:#eef4ff;color:#194f9d}.lesson{display:flex;justify-content:space-between;align-items:center;gap:14px;border-top:1px solid #e7edf5;padding:16px 0}.lesson:first-of-type{border-top:0}.lesson strong{display:block}.lesson small{display:block;margin-top:5px;color:#697b93}.notice{background:#fff8e8;border:1px solid #f2dca3;color:#775719;padding:14px 17px;border-radius:12px;margin:18px 0;line-height:1.5}
+.quiz-choice{display:block;width:100%;margin:10px 0;padding:13px;text-align:left;background:#fff;border:1px solid #d9e3f0;border-radius:11px;color:#233750}.quiz-choice:hover{background:#f0f6ff}.quiz-choice[aria-pressed=true]{border-color:#1c5ab1;background:#e9f2ff}.feedback{min-height:30px;font-weight:700;margin-top:13px}.progress{height:12px;background:#e8eef7;border-radius:12px;overflow:hidden}.progress>span{display:block;background:#21a89b;height:100%;width:0}.footer{text-align:center;color:#75849b;font-size:13px;padding:18px}
+@media(max-width:720px){.grid{grid-template-columns:1fr}.wide{grid-column:auto}.hero{grid-template-columns:1fr}.hero-icon{display:none}.top{padding:13px 16px}main{padding:16px 13px 45px}.lesson{align-items:flex-start;flex-direction:column}}
+</style>
 </head>
 <body>
-  <main class="container">
-    <div class="card">
-      <h1>SmartStudy 9</h1>
-      <h2>Học thông minh - Tiến bộ mỗi ngày</h2>
-      <p>
-        Ứng dụng hỗ trợ học sinh lớp 9
-        ôn tập kiến thức, luyện bài tập
-        và theo dõi tiến bộ học tập.
-      </p>
-      <p><strong>Toán 9 - Kết nối tri thức với cuộc sống</strong></p>
-      <div class="button">Đăng nhập Google - Sắp ra mắt</div>
-      <p class="note">
-        Phiên bản giao diện thử nghiệm.
-        Chưa kết nối tài khoản hoặc dữ liệu học sinh.
-      </p>
-    </div>
-  </main>
-</body>
-</html>
+<header><div class="top"><div class="brand">📘 SmartStudy <span>9</span></div><div class="tag">Bản thử nghiệm giao diện · v0.1</div></div></header>
+<main>
+<div class="hero"><div><h1>Học thông minh, tiến bộ mỗi ngày</h1><p>Không gian tự học dành cho học sinh lớp 9. Bắt đầu với Toán 9 — bộ sách Kết nối tri thức với cuộc sống.</p></div><div class="hero-icon" aria-hidden="true">🎓</div></div>
+<div class="notice" role="status">🔒 Đây là bản trình diễn chưa đăng nhập và chưa kết nối dữ liệu thật. Bài làm trên trang này không được gửi lên Google Sheets và không được lưu thành kết quả học tập.</div>
+<nav aria-label="Chức năng SmartStudy 9">
+<button type="button" data-tab="home" aria-selected="true">🏠 Tổng quan</button>
+<button type="button" data-tab="learn" aria-selected="false">📖 Học Toán 9</button>
+<button type="button" data-tab="practice" aria-selected="false">✍️ Luyện tập</button>
+<button type="button" data-tab="progress" aria-selected="false">📊 Tiến độ</button>
+<button type="button" data-tab="account" aria-selected="false">👤 Tài khoản</button>
+</nav>
+<section id="home"><div class="grid">
+<div class="card"><div class="muted">Môn học đang chuẩn bị</div><div class="stat">01</div><p>Toán 9 · Kết nối tri thức</p></div>
+<div class="card"><div class="muted">Chủ đề minh họa</div><div class="stat">02</div><p>Đại số và Hình học</p></div>
+<div class="card"><div class="muted">Hồ sơ học tập</div><div class="stat">—</div><p>Chưa đăng nhập, chưa có dữ liệu thật</p></div>
+<div class="card wide"><h2>Lộ trình khởi đầu</h2><p>1. Đăng nhập bằng tài khoản Google được phụ huynh phê duyệt.<br>2. Học theo chủ đề, làm bài và nhận gợi ý.<br>3. Xem kiến thức cần ôn lại và lịch luyện tập.</p><button class="action" type="button" data-go="learn">Xem các chủ đề</button></div>
+<div class="card"><h2>Nguyên tắc bảo vệ</h2><p>Một hồ sơ học sinh, tối đa một phiên hoạt động. Phụ huynh duyệt tài khoản và xác nhận bài thi đồng bộ muộn.</p><span class="pill">Đang xây dựng</span></div>
+</div></section>
+<section id="learn" hidden><h2 class="section-title">Toán 9 — các chủ đề khởi đầu</h2><div class="card">
+<div class="lesson"><div><strong>Đại số · Phương trình và hệ phương trình bậc nhất</strong><small>Nội dung minh họa, chưa đồng bộ chương trình chi tiết</small></div><button type="button" class="action secondary" data-go="practice">Luyện thử</button></div>
+<div class="lesson"><div><strong>Hình học · Hệ thức lượng trong tam giác vuông</strong><small>Nội dung minh họa, chưa đồng bộ chương trình chi tiết</small></div><button type="button" class="action secondary" data-go="practice">Luyện thử</button></div>
+</div></section>
+<section id="practice" hidden><h2 class="section-title">Luyện tập mẫu</h2><div class="card"><span class="pill">Bài mẫu · không tính điểm thật</span><h3 style="margin-top:14px">Giải phương trình: 2x + 3 = 11. Giá trị của x là bao nhiêu?</h3><div id="choices" role="group" aria-label="Chọn đáp án">
+<button class="quiz-choice" type="button" data-answer="2" aria-pressed="false">A. x = 2</button>
+<button class="quiz-choice" type="button" data-answer="3" aria-pressed="false">B. x = 3</button>
+<button class="quiz-choice" type="button" data-answer="4" aria-pressed="false">C. x = 4</button>
+<button class="quiz-choice" type="button" data-answer="5" aria-pressed="false">D. x = 5</button>
+</div><button type="button" class="action" id="check" disabled>Kiểm tra đáp án</button> <button type="button" class="action secondary" id="reset">Làm lại</button><div class="feedback" id="feedback" aria-live="polite"></div></div></section>
+<section id="progress" hidden><h2 class="section-title">Theo dõi tiến độ</h2><div class="card"><h3>Chưa có dữ liệu học tập</h3><p>Khi hệ thống đăng nhập và lưu bài được hoàn thiện, tiến độ sẽ được lấy từ hồ sơ học sinh trên máy chủ, không dựa vào dữ liệu tự khai từ trình duyệt.</p><div class="progress" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" aria-label="Tiến độ đã đồng bộ"><span></span></div><p>0% dữ liệu đã đồng bộ (chưa kết nối)</p></div></section>
+<section id="account" hidden><h2 class="section-title">Tài khoản học sinh</h2><div class="card"><h3>Đăng nhập Google</h3><p>Chỉ tài khoản Google được phụ huynh phê duyệt mới được sử dụng SmartStudy 9. Việc xác minh danh tính sẽ được thực hiện ở máy chủ trước khi cho phép truy cập dữ liệu.</p><button type="button" class="action" disabled>Đăng nhập Google · Đang hoàn thiện</button><p class="muted">Không cần chia sẻ quyền xem hoặc chỉnh sửa Google Sheets cho tài khoản học sinh.</p></div></section>
+</main>
+<div class="footer">SmartStudy 9 · Phiên bản giao diện thử nghiệm · Không nhập thông tin cá nhân vào bản thử nghiệm</div>
+<script>
+(function(){
+"use strict";
+const tabs=[...document.querySelectorAll("[data-tab]")];
+function showTab(id){if(!document.getElementById(id))return;tabs.forEach(b=>b.setAttribute("aria-selected",String(b.dataset.tab===id)));document.querySelectorAll("main section").forEach(s=>s.hidden=s.id!==id);}
+tabs.forEach(b=>b.addEventListener("click",()=>showTab(b.dataset.tab)));
+document.querySelectorAll("[data-go]").forEach(b=>b.addEventListener("click",()=>showTab(b.dataset.go)));
+let answer=null;const check=document.getElementById("check"),feedback=document.getElementById("feedback");
+document.querySelectorAll("[data-answer]").forEach(b=>b.addEventListener("click",()=>{answer=b.dataset.answer;document.querySelectorAll("[data-answer]").forEach(c=>c.setAttribute("aria-pressed",String(c===b)));check.disabled=false;feedback.textContent="";}));
+check.addEventListener("click",()=>{feedback.textContent=answer==="4"?"✓ Chính xác! 2x = 11 − 3 = 8, nên x = 4.":"Chưa đúng. Gợi ý: trừ 3 ở hai vế, sau đó chia hai vế cho 2.";feedback.style.color=answer==="4"?"#087d6d":"#9b5b12";});
+document.getElementById("reset").addEventListener("click",()=>{answer=null;check.disabled=true;feedback.textContent="";document.querySelectorAll("[data-answer]").forEach(c=>c.setAttribute("aria-pressed","false"));});
+})();
+</script>
+</body></html>
