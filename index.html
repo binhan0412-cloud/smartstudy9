@@ -15,6 +15,7 @@ section[hidden]{display:none!important}.grid{display:grid;grid-template-columns:
 .quiz-choice{display:block;width:100%;margin:10px 0;padding:13px;text-align:left;background:#fff;border:1px solid #d9e3f0;border-radius:11px;color:#233750}.quiz-choice:hover{background:#f0f6ff}.quiz-choice[aria-pressed=true]{border-color:#1c5ab1;background:#e9f2ff}.feedback{min-height:30px;font-weight:700;margin-top:13px}.progress{height:12px;background:#e8eef7;border-radius:12px;overflow:hidden}.progress>span{display:block;background:#21a89b;height:100%;width:0}.footer{text-align:center;color:#75849b;font-size:13px;padding:18px}
 @media(max-width:720px){.grid{grid-template-columns:1fr}.wide{grid-column:auto}.hero{grid-template-columns:1fr}.hero-icon{display:none}.top{padding:13px 16px}main{padding:16px 13px 45px}.lesson{align-items:flex-start;flex-direction:column}}
 </style>
+<script src="https://accounts.google.com/gsi/client" async defer></script>
 </head>
 <body>
 <header><div class="top"><div class="brand">📘 SmartStudy <span>9</span></div><div class="tag">Bản thử nghiệm giao diện · v0.1</div></div></header>
@@ -46,7 +47,7 @@ section[hidden]{display:none!important}.grid{display:grid;grid-template-columns:
 <button class="quiz-choice" type="button" data-answer="5" aria-pressed="false">D. x = 5</button>
 </div><button type="button" class="action" id="check" disabled>Kiểm tra đáp án</button> <button type="button" class="action secondary" id="reset">Làm lại</button><div class="feedback" id="feedback" aria-live="polite"></div></div></section>
 <section id="progress" hidden><h2 class="section-title">Theo dõi tiến độ</h2><div class="card"><h3>Chưa có dữ liệu học tập</h3><p>Khi hệ thống đăng nhập và lưu bài được hoàn thiện, tiến độ sẽ được lấy từ hồ sơ học sinh trên máy chủ, không dựa vào dữ liệu tự khai từ trình duyệt.</p><div class="progress" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" aria-label="Tiến độ đã đồng bộ"><span></span></div><p>0% dữ liệu đã đồng bộ (chưa kết nối)</p></div></section>
-<section id="account" hidden><h2 class="section-title">Tài khoản học sinh</h2><div class="card"><h3>Đăng nhập Google</h3><p>Chỉ tài khoản Google được phụ huynh phê duyệt mới được sử dụng SmartStudy 9. Việc xác minh danh tính sẽ được thực hiện ở máy chủ trước khi cho phép truy cập dữ liệu.</p><button type="button" class="action" disabled>Đăng nhập Google · Đang hoàn thiện</button><p class="muted">Không cần chia sẻ quyền xem hoặc chỉnh sửa Google Sheets cho tài khoản học sinh.</p></div></section>
+<section id="account" hidden><h2 class="section-title">Tài khoản học sinh</h2><div class="card"><h3>Đăng nhập Google</h3><p>Chỉ tài khoản Google được phụ huynh phê duyệt mới được sử dụng SmartStudy 9. Việc xác minh danh tính sẽ được thực hiện ở máy chủ trước khi cho phép truy cập dữ liệu.</p><div id="google-signin" aria-label="Đăng nhập bằng Google"></div><p id="auth-message" role="status" aria-live="polite">Đang tải chức năng đăng nhập Google…</p><button type="button" class="action secondary" id="signout" hidden>Đăng xuất khỏi bản thử nghiệm</button><p class="muted">Không cần chia sẻ quyền xem hoặc chỉnh sửa Google Sheets cho tài khoản học sinh.</p></div></section>
 </main>
 <div class="footer">SmartStudy 9 · Phiên bản giao diện thử nghiệm · Không nhập thông tin cá nhân vào bản thử nghiệm</div>
 <script>
@@ -60,6 +61,31 @@ let answer=null;const check=document.getElementById("check"),feedback=document.g
 document.querySelectorAll("[data-answer]").forEach(b=>b.addEventListener("click",()=>{answer=b.dataset.answer;document.querySelectorAll("[data-answer]").forEach(c=>c.setAttribute("aria-pressed",String(c===b)));check.disabled=false;feedback.textContent="";}));
 check.addEventListener("click",()=>{feedback.textContent=answer==="4"?"✓ Chính xác! 2x = 11 − 3 = 8, nên x = 4.":"Chưa đúng. Gợi ý: trừ 3 ở hai vế, sau đó chia hai vế cho 2.";feedback.style.color=answer==="4"?"#087d6d":"#9b5b12";});
 document.getElementById("reset").addEventListener("click",()=>{answer=null;check.disabled=true;feedback.textContent="";document.querySelectorAll("[data-answer]").forEach(c=>c.setAttribute("aria-pressed","false"));});
+const CLIENT_ID="665324699400-b9qipdmik36iokmokghbn27b1l9g4tt8.apps.googleusercontent.com";
+const authMessage=document.getElementById("auth-message");
+const signout=document.getElementById("signout");
+function initGoogle(){
+  if(!window.google?.accounts?.id){authMessage.textContent="Chưa tải được Google. Vui lòng tải lại trang.";return;}
+  google.accounts.id.initialize({
+    client_id:CLIENT_ID,
+    callback:response=>{
+      // Không giải mã token để cấp quyền. Chỉ máy chủ mới được xác minh chữ ký và tài khoản.
+      if(!response?.credential){authMessage.textContent="Google chưa trả về thông tin xác thực.";return;}
+      authMessage.textContent="Google đã trả về mã đăng nhập. Chưa xác minh ở máy chủ nên chưa cấp quyền học hoặc truy cập dữ liệu.";
+      signout.hidden=false;
+      // Không lưu, ghi log, hay gửi mã đăng nhập đến nơi chưa được xác minh.
+    },
+    auto_select:false
+  });
+  google.accounts.id.renderButton(document.getElementById("google-signin"),{theme:"outline",size:"large",text:"signin_with",shape:"rectangular"});
+  authMessage.textContent="Bạn có thể thử đăng nhập. Đây mới là bước kiểm tra giao diện, chưa cấp quyền học.";
+}
+signout.addEventListener("click",()=>{
+  if(window.google?.accounts?.id)google.accounts.id.disableAutoSelect();
+  authMessage.textContent="Đã kết thúc trạng thái thử nghiệm trên trang. Để đổi tài khoản Google, hãy chọn tài khoản khi đăng nhập lại.";
+  signout.hidden=true;
+});
+window.addEventListener("load",initGoogle);
 })();
 </script>
 </body></html>
