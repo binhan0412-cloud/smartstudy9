@@ -1,7 +1,9 @@
 <!doctype html>
-<html lang="vi"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="referrer" content="strict-origin-when-cross-origin"><title>SmartStudy 9 – Kiểm thử V4</title><style>body{font:16px system-ui;background:#f0f4f8;color:#24364b;padding:24px}main{max-width:600px;margin:40px auto;background:white;padding:28px;border-radius:16px}input{width:100%;box-sizing:border-box;padding:12px}button{padding:12px;margin:12px 0}#status{white-space:pre-wrap;background:#f0f4f8;padding:16px}</style><script src="https://accounts.google.com/gsi/client" async></script></head><body><main><h1>SmartStudy 9</h1><h2>Kiểm thử Google V4</h2><p>Chỉ dùng tài khoản người lớn thử nghiệm. Không cấp quyền học tập. Không nhập mật khẩu hoặc token vào trang này.</p><label for="nonce">Nonce do trang quản trị đăng ký</label><input id="nonce" autocomplete="off" spellcheck="false" maxlength="64"><button id="start">Bắt đầu</button><div id="googleButton"></div><p id="status" role="status">Chờ mã nonce.</p><button id="reset" hidden>Thử lại</button></main><script>
+<html lang="vi"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="referrer" content="strict-origin-when-cross-origin"><title>SmartStudy 9 – Kiểm thử V4</title><style>body{font:16px system-ui;background:#f0f4f8;color:#24364b;padding:24px}main{max-width:600px;margin:40px auto;background:white;padding:28px;border-radius:16px}input{width:100%;box-sizing:border-box;padding:12px}button{padding:12px;margin:12px 0}#status{white-space:pre-wrap;background:#f0f4f8;padding:16px}</style><script src="https://accounts.google.com/gsi/client" async></script></head><body><main><h1>SmartStudy 9</h1><h2>Kiểm thử Google V4</h2><p>Chỉ dùng tài khoản người lớn thử nghiệm. Không cấp quyền học tập. Không nhập mật khẩu hoặc token vào trang này.</p><label for="nonce">Nonce do trang quản trị đăng ký</label><input id="nonce" autocomplete="off" spellcheck="false" maxlength="64"><button id="start">Bắt đầu</button><div id="googleButton"></div><p id="status" role="status">Chờ mã nonce.</p><button id="copy" hidden>Sao chép ID Token để xác minh riêng tư</button><p>Chỉ dán vào trang Apps Script /dev của chính bạn. Không gửi token qua chat, email hoặc ảnh.</p><button id="reset" hidden>Thử lại</button></main><script>
 "use strict";
 const $=id=>document.getElementById(id);
+let credential=null;
+$("copy").onclick=async()=>{if(!credential)return;try{await navigator.clipboard.writeText(credential);credential=null;$("copy").hidden=true;$("status").textContent="Đã sao chép. Dán ngay vào trang quản trị riêng tư, sau đó xóa clipboard."; }catch{$("status").textContent="Không thể sao chép. Kiểm tra quyền clipboard.";}};
 $("reset").onclick=()=>location.reload();
 $("start").onclick=()=>{
  const nonce=$("nonce").value.trim();
@@ -14,6 +16,7 @@ $("start").onclick=()=>{
  if(parts.length!==3)throw Error();
  const b=parts[1].replace(/-/g,"+").replace(/_/g,"/");
  const claims=JSON.parse(new TextDecoder().decode(Uint8Array.from(atob(b.padEnd(Math.ceil(b.length/4)*4,"=")),c=>c.charCodeAt(0))));
+ if(claims.nonce===nonce){credential=response.credential;$("copy").hidden=false;}
  $("status").textContent=claims.nonce===nonce?"Google đã trả ID Token có nonce trùng khớp. Chỉ kiểm tra phía trình duyệt; chưa xác minh máy chủ, chưa cấp quyền.":"Nonce không trùng khớp. Dừng kiểm thử.";
  }catch{ $("status").textContent="Không đọc được phản hồi Google."; }
  $("googleButton").replaceChildren();
